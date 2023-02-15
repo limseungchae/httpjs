@@ -30,7 +30,7 @@ app.use((req, res) => {
 
 // 500 처리
 app.use((err, req, res, next) => {
-    res.status(404);
+    res.status(500);
     res.sendFile(path.join(__dirname, 'public', '500.html'));
 });
 
