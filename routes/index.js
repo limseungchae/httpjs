@@ -41,11 +41,36 @@ router.post('/sungjuk', (req, res, next) => {
     res.redirect(304, '/');
 });
 
+router.get('/showsungjuk', async (req, res) => {
+
+    let sjs = new SungJuk().select()
+        .then(async result => { return await result; });
+    console.log(await sjs);
+
+    res.render('showsungjuk',
+        {title: '성적전체보기', sjs: await sjs});
+});
+
+router.get('/viewungjuk', async (req, res) => {
+
+    let sjno = req.query.sjno; // querystring의  매개변수 추출
+
+    let sjs =  new SungJuk().select(sjno)
+        .then(async result => { return await result; });
+    console.log(await sjs);
+
+    res.render('viewsungjuk',
+        {title: '성적상세보기', sjs: await sjs});
+});
+
+
 // 단순한 그림파일을 화면에 표시하기 위해
 // 일일이 라우팅 설정하는 것은 번거로움
 // router.get('/smile.png', (req, res) => {
 //     // 응답으로 지정한 파일의 내용을 전송함
 //     res.sendFile(path.join(__dirname, '../static/img', 'smile.png'));
 // });
+
+
 
 module.exports = router;
