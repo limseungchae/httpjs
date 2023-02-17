@@ -31,7 +31,7 @@ class SungJuk {
         } catch (e) {
             console.log(e);
         } finally {
-            await oracledb.closeConn(conn);
+            await conn.close();
         }
     }
 
