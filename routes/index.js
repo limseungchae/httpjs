@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
-const router = express.Router();
+const Sungjuk = require('../models/Sungjuk')
 
+const router = express.Router();
 
 // show index page
 router.get('/', (req, res) => {
@@ -20,14 +21,22 @@ router.post('/sungjuk', (req, res, next) => {
     // console.log(req.body);
     // console.log(req.body, req.body.name, req.body.ker, req.body.eng, req.body.mat);
 
-    let { name, kor, eng, mat } = req.body
+    let { name, kor, eng, mat } = req.body;
+    kor = parseInt(kor);
+    eng = parseInt(eng);
+    mat = parseInt(mat);
     console.log(name, kor, eng, mat);
 
     // 성적처리
     let [tot, avg, grd] = [kor+eng+mat, (kor+eng+mat)/3, '가'];
+    if (avg >= 90) grd = '수';
+    else if (avg >=80) grd = '우';
+    else if (avg >=80) grd = '미';
+    else if (avg >=80) grd = '양';
     console.log(tot, avg, grd);
 
-    // 데이터베이스 처리 - sungjuk 테이블에 insert
+    // 데이터베이스 처리 - sungjuk 테이블에 insert.
+    new Sungjuk(naem,kor,eng,mat,avg,grd).insert();
 
 
     res.redirect(304, '/');
